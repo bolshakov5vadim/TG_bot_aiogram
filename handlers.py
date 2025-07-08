@@ -37,7 +37,7 @@ async def cmd_read(message: Message):
 
 @router.message(F.text == 'update')#F - более гибкая
 async def cmd_update(message: Message):
-    words = message.text.split(" ")
+    words, params = message.text.split(" "), ""
     if (len(words)>1): params='{"name": '+words[1]+', "surname": }'
     if (len(words)>2): params='{"name": '+words[1]+', "surname": '+words[2]+'}'
     session = aiohttp.ClientSession()
