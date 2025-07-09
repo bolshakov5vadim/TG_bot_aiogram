@@ -1,17 +1,17 @@
 from handlers import router
 
-from aiogram import Bot, Dispatcher,types
+from aiogram import Bot, Dispatcher,types 
 from aiogram.fsm.storage.memory import MemoryStorage
-# Библиотека Телеграм
+# Телеграм - библиотека
 
 from decouple import Config, RepositoryEnv
 ENV_FILE = 'e.env'
 config = Config(RepositoryEnv(ENV_FILE))
-# Поддержка конфиг-файлов
+# Подключение config-файла
 
 async def main():
 
- bot = Bot(token=config('TOKEN')) 
+ bot = Bot(token=config('TOKEN'))
 
  commands = [
         types.BotCommand(command='/start', description='Начать взаимодействие с ботом'),
@@ -19,11 +19,10 @@ async def main():
         types.BotCommand(command='/read', description='Чтение данных'),
     ]
  await bot.set_my_commands(commands)
- # Бот и его подсказки
 
- dp = Dispatcher(storage=MemoryStorage()) # Объект обработки сообщений
+ dp = Dispatcher(storage=MemoryStorage()) # объект обработки сообщений
 
- # Основной процесс
+ #основной процесс
  dp.include_router(router)
  await bot.delete_webhook(drop_pending_updates=True)
  await dp.start_polling(bot)
