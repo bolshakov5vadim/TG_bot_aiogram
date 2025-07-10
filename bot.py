@@ -12,17 +12,17 @@ config = Config(RepositoryEnv(ENV_FILE))
 async def main():
 
  bot = Bot(token=config('TOKEN'))
-
  commands = [
         types.BotCommand(command='/start', description='Начать взаимодействие с ботом'),
         types.BotCommand(command='/create', description='Запись данных'),
         types.BotCommand(command='/read', description='Чтение данных'),
     ]
  await bot.set_my_commands(commands)
+ # Бот + подсказки
 
- dp = Dispatcher(storage=MemoryStorage()) # объект обработки сообщений
+ dp = Dispatcher(storage=MemoryStorage()) # Объект обработки сообщений
 
- #основной процесс
+ # Основной процесс
  dp.include_router(router)
  await bot.delete_webhook(drop_pending_updates=True)
  await dp.start_polling(bot)
