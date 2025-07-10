@@ -47,10 +47,10 @@ async def cmd_create(message: Message, state: FSMContext):
 @router.message()
 async def process_text(message: Message, state: FSMContext):
 
- if state.get_state() == Form1.waiting_for_text.state():
-    words, params = message.text.split(" "), ""
-    if (len(words)>1): params={"name": words[1], "surname": None}
-    if (len(words)>2): params={"name": words[1], "surname": words[2]}
+ if await state.get_state() == str(Form1.waiting_for_text):
+    words, params = message.text.split(" "), {}
+    if (len(words)>1): params={"name": words[0], "surname": None}
+    if (len(words)>2): params={"name": words[0], "surname": words[1]}
 
     # Три строчки связи с API
     async with aiohttp.ClientSession() as session:
@@ -68,7 +68,7 @@ async def cmd_read(message: Message, state: FSMContext):
 @router.message()
 async def process_text(message: Message, state: FSMContext):
 
- if state.get_state() == Form2.waiting_for_text.state():
+ if await state.get_state() == str(Form2.waiting_for_text):
     words, params = message.text.split(" "), ""
     if (len(words)>1): params=words[0]
 
@@ -88,8 +88,8 @@ async def cmd_update(message: Message, state: FSMContext):
 @router.message()
 async def process_text(message: Message, state: FSMContext):
 
- if state.get_state() == Form3.waiting_for_text.state():
-    words, params = message.text.split(" "), ""
+ if await state.get_state() == str(Form3.waiting_for_text):
+    words, params = message.text.split(" "), {}
     if (len(words)>1): params={"id": words[0], "name": words[1], "surname": None}
     if (len(words)>2): params={"id": words[0], "name": words[1], "surname": words[2]}
 
