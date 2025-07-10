@@ -69,7 +69,7 @@ async def cmd_read(message: Message, state: FSMContext):
 async def process_text(message: Message, state: FSMContext):
 
  if await state.get_state() == str(Form2.waiting_for_text):
-    words, params = message.text.split(" "), ""
+    words, params = message.text.split(" "), {}
     if (len(words)>1): params=words[0]
 
     # Три строчки связи с API
